@@ -114,8 +114,9 @@ if ($action == "update" && $user->hasRight('takepos', 'run')) {
 
 if ($action == "updatename" && $user->hasRight('takepos', 'run')) {
 	$newname = preg_replace("/[^a-zA-Z0-9\s]/", "", $newname); // Only English chars
-	if (strlen($newname) > 3) {
-		$newname = substr($newname, 0, 3); // Only 3 chars
+	// CUSTOM MODIFICATION: Allow up to 4 characters instead of 3 (original limit was: if (strlen($newname) > 3))
+	if (strlen($newname) > 4) {
+		$newname = substr($newname, 0, 4); // Allow 4 chars (changed from 3)
 	}
 	$resql = $db->query("UPDATE ".MAIN_DB_PREFIX."takepos_floor_tables SET label='".$db->escape($newname)."' WHERE rowid = ".((int) $place));
 }
